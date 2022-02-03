@@ -24,9 +24,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 const createItems = async (item) => {
-  const itens = await fetchProducts('computador');
+  const itens = await fetchProducts(item);
   const items = document.querySelector('.items');
-  itens.forEach((iten) => {
+  itens.results.forEach((iten) => {
     const param = {
       sku: iten.id,
       name: iten.title,
@@ -52,4 +52,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = async () => { };
+window.onload = async () => { 
+  createItems('playstation');
+};
