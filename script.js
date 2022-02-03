@@ -30,7 +30,7 @@ const createItems = async (item) => {
     const param = {
       sku: iten.id,
       name: iten.title,
-      salePrice: iten.price,
+      image: iten.thumbnail,
     };
     items.appendChild(createProductItemElement(param));
   });
@@ -51,7 +51,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+const buttonAddToShip = async (id) => {
+  const items = await fetchItem(id);
+  const cart = document.querySelector('.cart__items');
+  items.forEach((item) => {
+    const data = {
+      sku: item.id,
+      name: item.name,
+      salePrice: item.price,
+    };
+    cart.appendChild(createCartItemElement(data));
+  });
+};
 
 window.onload = async () => { 
-  createItems('playstation');
+  console.log(fetchProducts('computador'));
+  createItems('coca');
 };
