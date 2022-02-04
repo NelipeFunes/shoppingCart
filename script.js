@@ -23,6 +23,34 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+function cartItemClickListener(event) {
+}
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+const buttonAddToShip = async (id) => {
+  const items = await fetchItem(id);
+  const cart = document.querySelector('.cart__items');
+  const data = {
+    sku: items.id,
+    name: items.title,
+    salePrice: items.price,
+  };
+  cart.appendChild(createCartItemElement(data));
+};
+const shipCart = async (e) => {
+  const param = await getSkuFromProductItem(e.target.parentNode);
+  buttonAddToShip(param);
+};
+
 const createItems = async (item) => {
   const itens = await fetchProducts(item);
   const items = document.querySelector('.items');
@@ -34,37 +62,20 @@ const createItems = async (item) => {
     };
     items.appendChild(createProductItemElement(param));
   });
-};
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-const buttonAddToShip = async (id) => {
-  const items = await fetchItem(id);
-  const cart = document.querySelector('.cart__items');
-  items.forEach((item) => {
-    const data = {
-      sku: item.id,
-      name: item.name,
-      salePrice: item.price,
-    };
-    cart.appendChild(createCartItemElement(data));
+  document.querySelectorAll('.item__add').forEach((btn) => {
+    btn.addEventListener('click', shipCart);
   });
 };
 
-window.onload = async () => { 
-  console.log(fetchProducts('computador'));
-  createItems('coca');
+// const bababoey = async () => {
+//   await fetchItem();
+//   const btns = document.querySelectorAll('.item__add');
+//   console.log(btns);
+//   btns.forEach((btn) => {
+//     btn.addEventListener('click', console.log('felipe'));
+//   });
+// };
+
+window.onload = async () => {
+  createItems('Fusca');
 };
