@@ -78,6 +78,8 @@ function empCart() {
 
 window.onload = async () => {
   await createItems('Fusca');
+  const loading = document.querySelector('.loading');
+  loading.remove();
   cart.innerHTML = localStorage.getItem('cartItems');
   const btn = document.querySelector('.empty-cart');
   btn.addEventListener('click', empCart);
