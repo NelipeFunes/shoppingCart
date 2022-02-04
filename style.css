@@ -152,7 +152,7 @@ body {
   background-color: rgb(5, 52, 219);
 }
 
-.price {
+.total-price {
   display: flex;
   justify-content: center;
   padding: 20px;
