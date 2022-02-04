@@ -48,6 +48,7 @@ const buttonAddToShip = async (id) => {
     salePrice: items.price,
   };
   cart.appendChild(createCartItemElement(data));
+  localStorage.setItem('cartItems', cart.innerHTML);  
 };
 const shipCart = async (e) => {
   const param = await getSkuFromProductItem(e.target.parentNode);
