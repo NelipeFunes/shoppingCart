@@ -151,3 +151,10 @@ body {
 .empty-cart:hover {
   background-color: rgb(5, 52, 219);
 }
+
+.price {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  font-size: 30px;
+}
