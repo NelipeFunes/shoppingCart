@@ -1,3 +1,5 @@
+const cart = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,9 +30,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 function cartItemClickListener(event) {
-  const item = document.querySelector('.cart__items');
   const targ = event.target;
-  item.removeChild(targ);
+  cart.removeChild(targ);
 }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -41,18 +42,17 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 const buttonAddToShip = async (id) => {
   const items = await fetchItem(id);
-  const cart = document.querySelector('.cart__items');
   const data = {
     sku: items.id,
     name: items.title,
     salePrice: items.price,
   };
-  cart.appendChild(createCartItemElement(data));
-  localStorage.setItem('cartItems', cart.innerHTML);  
+  cart.appendChild(createCartItemElement(data)); 
 };
 const shipCart = async (e) => {
   const param = await getSkuFromProductItem(e.target.parentNode);
   buttonAddToShip(param);
+  localStorage.setItem('cartItems', cart.innerHTML);
 };
 
 const createItems = async (item) => {
@@ -71,15 +71,14 @@ const createItems = async (item) => {
   });
 };
 
-// const bababoey = async () => {
-//   await fetchItem();
-//   const btns = document.querySelectorAll('.item__add');
-//   console.log(btns);
-//   btns.forEach((btn) => {
-//     btn.addEventListener('click', console.log('felipe'));
-//   });
-// };
+function empCart() {
+  const carrinho = document.querySelectorAll('.cart__items');
+  carrinho[0].innerHTML = '';
+}
 
 window.onload = async () => {
-  createItems('Fusca');
+  await createItems('Fusca');
+  cart.innerHTML = localStorage.getItem('cartItems');
+  const btn = document.querySelector('.empty-cart');
+  btn.addEventListener('click', empCart);
 };
